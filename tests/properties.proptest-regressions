@@ -1,0 +1,12 @@
+# Seeds for failure cases proptest has generated in the past. It is
+# automatically read and these particular cases re-run before any
+# novel cases are generated.
+#
+# It is recommended to check this file in to source control so that
+# everyone who runs the test benefits from these saved cases.
+cc 0bf7837c68e68077433a2385e158b8e4348f06d363293a96c70141b1d77ece89 # shrinks to text = "^#%!#", fg = None, bg = None, styles = [Underline]
+cc ef91529905b983e7af8d00fc77e87bc69a0c20908a8a11b3f70d77519e1c1419 # shrinks to text = "Y6 n##^#&&M!80G_", fg = Some(Red), bg = None, styles = [Italic, Dim]
+cc 4f79c418eda2b0e8af8555906ff1d50b6c8af8beff2323a9b21e3285511b52e5 # shrinks to text = "&!y!&!!M#LCN#pO", fg = Some(BrightCyan), bg = Some(BrightBlue), styles = [Italic, Strikethrough]
+cc ff16ac7bba42a319f2b31eae5a8668187ef437ab81e92fbedd82bd0da650eda6 # shrinks to text = "%", fg = Some(BrightWhite), bg = None, styles = [Italic, Dim]
+cc 587e77cf56c11f9837620d31101689e980a1580182cde3fe7538c997a073f634 # shrinks to text = "zY _o!0#%v%Tr!Ax9v", fg = Some(BrightBlack), bg = Some(BrightMagenta), styles = [Strikethrough, Bold, Italic]
+cc 91cea0100ce79e4de9c46b3fe21b0e7147f60593699609bea0e7ba575146e030 # shrinks to text = "a#^i%%Xhp2v5", fg = None, bg = Some(BrightCyan), styles = [Underline]

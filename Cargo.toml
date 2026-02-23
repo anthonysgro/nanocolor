@@ -1,0 +1,15 @@
+[package]
+name = "nanocolor"
+version = "0.1.0"
+edition = "2021"
+description = "A minimal, zero-dependency terminal color and text styling crate for Rust"
+license = "MIT"
+repository = "https://github.com/anthonysgro/nanocolor"
+keywords = ["color", "terminal", "ansi", "cli", "tui"]
+categories = ["command-line-interface"]
+readme = "README.md"
+
+[dependencies]
+
+[dev-dependencies]
+proptest = "1"
