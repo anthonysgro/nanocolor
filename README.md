@@ -4,7 +4,7 @@ A minimal, zero-dependency terminal color and text styling crate for Rust.
 
 ![demo](demo.png)
 
-Part of the nano crate family — minimal, zero-dependency building blocks for CLI apps in Rust:
+Part of the nano crate family — minimal, zero-dependency building blocks for focused apps in Rust:
 
 - [nanocolor](https://github.com/anthonysgro/nanocolor) — terminal colors and styles
 - [nanospinner](https://github.com/anthonysgro/nanospinner) — terminal spinners
