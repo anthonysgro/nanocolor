@@ -73,11 +73,10 @@ nanocolor is for when you just want colors and don't want to think about it.
 
 ## Quick Start
 
-Add `nanocolor` to your `Cargo.toml`:
+Add `nanocolor` to your project:
 
-```toml
-[dependencies]
-nanocolor = "0.1.0"
+```sh
+cargo add nanocolor
 ```
 
 ```rust
