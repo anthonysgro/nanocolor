@@ -1,7 +1,4 @@
-# 🎨 nanocolor
-
-[![Crates.io](https://img.shields.io/crates/v/nanocolor)](https://crates.io/crates/nanocolor)
-[![Docs.rs](https://docs.rs/nanocolor/badge.svg)](https://docs.rs/nanocolor/latest/nanocolor/)
+# 🎨 nanocolor [![Crates.io](https://img.shields.io/crates/v/nanocolor)](https://crates.io/crates/nanocolor) [![Docs.rs](https://docs.rs/nanocolor/badge.svg)](https://docs.rs/nanocolor/latest/nanocolor/) [![Build Status](https://github.com/anthonysgro/nanocolor/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/anthonysgro/nanocolor/actions) [![Coverage Status](https://coveralls.io/repos/github/anthonysgro/nanocolor/badge.svg?branch=main)](https://coveralls.io/github/anthonysgro/nanocolor?branch=main) [![License](https://img.shields.io/crates/l/nanocolor)](https://crates.io/crates/nanocolor)
 
 A minimal, zero-dependency terminal color and text styling crate for Rust.
 
