@@ -916,4 +916,24 @@ mod tests {
             assert_eq!(output, "\x1b[31mdecorative\x1b[0m");
         });
     }
+
+    #[test]
+    fn test_enable_forces_colors_on() {
+        let _guard = COLOR_OVERRIDE_LOCK.lock().unwrap();
+        clear_colors_override();
+        enable();
+        let output = format!("{}", "hi".red());
+        assert_eq!(output, "\x1b[31mhi\x1b[0m");
+        COLOR_MODE.store(0, AtomicOrdering::SeqCst);
+    }
+
+    #[test]
+    fn test_disable_forces_colors_off() {
+        let _guard = COLOR_OVERRIDE_LOCK.lock().unwrap();
+        clear_colors_override();
+        disable();
+        let output = format!("{}", "hi".red());
+        assert_eq!(output, "hi");
+        COLOR_MODE.store(0, AtomicOrdering::SeqCst);
+    }
 }
