@@ -12,6 +12,8 @@ Part of the nano crate family — minimal, zero-dependency building blocks for C
 - [nanocolor](https://github.com/anthonysgro/nanocolor) — terminal colors and styles
 - [nanospinner](https://github.com/anthonysgro/nanospinner) — terminal spinners
 - [nanoprogress](https://github.com/anthonysgro/nanoprogress) — progress bars
+- [nanologger](https://github.com/anthonysgro/nanologger) — minimal logger
+- [nanotime](https://github.com/anthonysgro/nanotime) — time utilities
 
 ANSI 16-color support and common text styles through a chainable trait-based API — no heavy crates, no transitive dependencies, under 300 lines of code.
 
