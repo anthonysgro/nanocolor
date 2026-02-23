@@ -52,7 +52,13 @@ fn main() {
     println!("\n{}", "Chaining:".bold().underline());
     println!("  {}", "red bold underline".red().bold().underline());
     println!("  {}", "green on white italic".green().on_white().italic());
-    println!("  {}", "bright cyan dim strikethrough".bright_cyan().dim().strikethrough());
+    println!(
+        "  {}",
+        "bright cyan dim strikethrough"
+            .bright_cyan()
+            .dim()
+            .strikethrough()
+    );
 
     // Primitive types
     println!("\n{}", "Primitive types:".bold().underline());
@@ -68,9 +74,18 @@ fn main() {
     // Conditional styling with .whenever()
     println!("\n{}", "Conditional styling:".bold().underline());
     let verbose = true;
-    println!("  whenever(true):  {}", "styled".red().bold().whenever(true));
-    println!("  whenever(false): {}", "not styled".red().bold().whenever(false));
-    println!("  whenever(cond):  {}", "conditional".yellow().whenever(verbose));
+    println!(
+        "  whenever(true):  {}",
+        "styled".red().bold().whenever(true)
+    );
+    println!(
+        "  whenever(false): {}",
+        "not styled".red().bold().whenever(false)
+    );
+    println!(
+        "  whenever(cond):  {}",
+        "conditional".yellow().whenever(verbose)
+    );
 
     // Decorative masking
     println!("\n{}", "Decorative masking:".bold().underline());

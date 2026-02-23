@@ -1,6 +1,6 @@
-use proptest::prelude::*;
-use nanocolor::Color;
 use nanocolor::with_colors_override;
+use nanocolor::Color;
+use proptest::prelude::*;
 
 fn any_color() -> impl Strategy<Value = Color> {
     prop_oneof![
@@ -167,15 +167,12 @@ proptest! {
     }
 }
 
-
 fn any_text() -> impl Strategy<Value = String> {
-    "[a-zA-Z0-9 _!@#%^&]{1,20}"
-        .prop_filter("no ANSI escapes", |s| !s.contains('\x1b'))
+    "[a-zA-Z0-9 _!@#%^&]{1,20}".prop_filter("no ANSI escapes", |s| !s.contains('\x1b'))
 }
 
 fn any_style_subset_nonempty() -> impl Strategy<Value = Vec<Style>> {
-    prop::collection::hash_set(any_style(), 1..=5)
-        .prop_map(|s| s.into_iter().collect::<Vec<_>>())
+    prop::collection::hash_set(any_style(), 1..=5).prop_map(|s| s.into_iter().collect::<Vec<_>>())
 }
 
 // Feature: nanocolor, Property 4: Display output format correctness
@@ -306,7 +303,6 @@ proptest! {
     }
 }
 
-
 // Feature: nanocolor-v2-features, Property 3: .whenever(false) strips ANSI codes
 // **Validates: Requirements 2.3**
 proptest! {
@@ -329,8 +325,6 @@ proptest! {
         );
     }
 }
-
-
 
 // Feature: nanocolor-v2-features, Property 4: .whenever() last-write-wins
 // **Validates: Requirements 2.5**
@@ -363,8 +357,6 @@ proptest! {
     }
 }
 
-
-
 // Feature: nanocolor-v2-features, Property 5: Mask with active styling renders normally
 // **Validates: Requirements 3.2**
 proptest! {
@@ -389,7 +381,6 @@ proptest! {
         );
     }
 }
-
 
 // Feature: nanocolor-v2-features, Property 6: Mask with inactive styling renders empty
 // **Validates: Requirements 3.3, 3.4, 3.5**

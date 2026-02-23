@@ -111,8 +111,8 @@
 //! `reverse()`, `hidden()`, `strikethrough()`, `overline()`
 
 use std::borrow::Cow;
-use std::sync::OnceLock;
 use std::sync::atomic::{AtomicU8, Ordering as AtomicOrdering};
+use std::sync::OnceLock;
 
 use std::sync::atomic::AtomicBool;
 use std::sync::Mutex;
@@ -326,54 +326,57 @@ pub struct StyledString<'a> {
 /// let highlighted = "note".bright_cyan().on_black().underline();
 /// let count = 42.green();
 /// ```
+macro_rules! define_fg_methods {
+    ($($method:ident => $color:ident),* $(,)?) => {
+        $(fn $method(self) -> StyledString<'static> where Self: Sized {
+            let mut s = self.styled(); s.fg = Some(Color::$color); s
+        })*
+    };
+}
+
+macro_rules! define_bg_methods {
+    ($($method:ident => $color:ident),* $(,)?) => {
+        $(fn $method(self) -> StyledString<'static> where Self: Sized {
+            let mut s = self.styled(); s.bg = Some(Color::$color); s
+        })*
+    };
+}
+
+macro_rules! define_style_methods {
+    ($($method:ident => $style:ident),* $(,)?) => {
+        $(fn $method(self) -> StyledString<'static> where Self: Sized {
+            let mut s = self.styled(); s.styles.push(Style::$style); s
+        })*
+    };
+}
+
 pub trait Colorize {
     /// Wraps the value in a [`StyledString`] with no colors or styles applied.
     fn styled(self) -> StyledString<'static>;
 
-    fn black(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::Black); s }
-    fn red(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::Red); s }
-    fn green(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::Green); s }
-    fn yellow(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::Yellow); s }
-    fn blue(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::Blue); s }
-    fn magenta(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::Magenta); s }
-    fn cyan(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::Cyan); s }
-    fn white(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::White); s }
-    fn bright_black(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightBlack); s }
-    fn bright_red(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightRed); s }
-    fn bright_green(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightGreen); s }
-    fn bright_yellow(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightYellow); s }
-    fn bright_blue(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightBlue); s }
-    fn bright_magenta(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightMagenta); s }
-    fn bright_cyan(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightCyan); s }
-    fn bright_white(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.fg = Some(Color::BrightWhite); s }
+    define_fg_methods! {
+        black => Black, red => Red, green => Green, yellow => Yellow,
+        blue => Blue, magenta => Magenta, cyan => Cyan, white => White,
+        bright_black => BrightBlack, bright_red => BrightRed,
+        bright_green => BrightGreen, bright_yellow => BrightYellow,
+        bright_blue => BrightBlue, bright_magenta => BrightMagenta,
+        bright_cyan => BrightCyan, bright_white => BrightWhite,
+    }
 
-    fn on_black(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::Black); s }
-    fn on_red(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::Red); s }
-    fn on_green(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::Green); s }
-    fn on_yellow(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::Yellow); s }
-    fn on_blue(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::Blue); s }
-    fn on_magenta(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::Magenta); s }
-    fn on_cyan(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::Cyan); s }
-    fn on_white(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::White); s }
-    fn on_bright_black(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightBlack); s }
-    fn on_bright_red(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightRed); s }
-    fn on_bright_green(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightGreen); s }
-    fn on_bright_yellow(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightYellow); s }
-    fn on_bright_blue(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightBlue); s }
-    fn on_bright_magenta(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightMagenta); s }
-    fn on_bright_cyan(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightCyan); s }
-    fn on_bright_white(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.bg = Some(Color::BrightWhite); s }
+    define_bg_methods! {
+        on_black => Black, on_red => Red, on_green => Green, on_yellow => Yellow,
+        on_blue => Blue, on_magenta => Magenta, on_cyan => Cyan, on_white => White,
+        on_bright_black => BrightBlack, on_bright_red => BrightRed,
+        on_bright_green => BrightGreen, on_bright_yellow => BrightYellow,
+        on_bright_blue => BrightBlue, on_bright_magenta => BrightMagenta,
+        on_bright_cyan => BrightCyan, on_bright_white => BrightWhite,
+    }
 
-    fn bold(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Bold); s }
-    fn dim(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Dim); s }
-    fn italic(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Italic); s }
-    fn underline(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Underline); s }
-    fn blink(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Blink); s }
-    fn rapid_blink(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::RapidBlink); s }
-    fn reverse(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Reverse); s }
-    fn hidden(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Hidden); s }
-    fn strikethrough(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Strikethrough); s }
-    fn overline(self) -> StyledString<'static> where Self: Sized { let mut s = self.styled(); s.styles.push(Style::Overline); s }
+    define_style_methods! {
+        bold => Bold, dim => Dim, italic => Italic, underline => Underline,
+        blink => Blink, rapid_blink => RapidBlink, reverse => Reverse,
+        hidden => Hidden, strikethrough => Strikethrough, overline => Overline,
+    }
 }
 
 impl Colorize for &str {
@@ -485,7 +488,9 @@ macro_rules! impl_colorize {
     };
 }
 
-impl_colorize!(i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, usize, f32, f64, bool, char);
+impl_colorize!(
+    i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, usize, f32, f64, bool, char
+);
 
 /// Wraps any `Display` type in a `StyledString` for chainable styling.
 ///
@@ -591,17 +596,23 @@ impl<'a> std::fmt::Display for StyledString<'a> {
         write!(f, "\x1b[")?;
         let mut first = true;
         for style in &self.styles {
-            if !first { write!(f, ";")?; }
+            if !first {
+                write!(f, ";")?;
+            }
             write!(f, "{}", style.code())?;
             first = false;
         }
         if let Some(fg) = self.fg {
-            if !first { write!(f, ";")?; }
+            if !first {
+                write!(f, ";")?;
+            }
             write!(f, "{}", fg.fg_code())?;
             first = false;
         }
         if let Some(bg) = self.bg {
-            if !first { write!(f, ";")?; }
+            if !first {
+                write!(f, ";")?;
+            }
             write!(f, "{}", bg.bg_code())?;
         }
         write!(f, "m{}\x1b[0m", self.text)
@@ -905,6 +916,4 @@ mod tests {
             assert_eq!(output, "\x1b[31mdecorative\x1b[0m");
         });
     }
-
-
 }
